@@ -9,5 +9,30 @@
     "@playwright/test": "^1.58.1",
     "@types/node": "^25.2.1",
     "dotenv": "^17.2.3"
-  }
+  },
+  "name": "playwright-course-tests",
+  "version": "1.0.0",
+  "description": "Requires running [https://github.com/bondar-artem/pw-practice-app] locally.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "fsevents": "^2.3.2",
+    "playwright": "^1.58.1",
+    "playwright-core": "^1.58.1",
+    "undici-types": "^7.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filipbiro/playwright-course-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/filipbiro/playwright-course-tests/issues"
+  },
+  "homepage": "https://github.com/filipbiro/playwright-course-tests#readme"
 }
