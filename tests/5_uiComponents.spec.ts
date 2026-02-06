@@ -1,20 +1,17 @@
 import {test, expect} from '@playwright/test'
 
-test.beforeEach(async({page}) =>
-{
+test.beforeEach(async({page}) => {
   await page.goto('/')
 })
 
-test.describe('Form Layouts page', () => 
-  {
+test.describe('Form Layouts page', () => {
     test.beforeEach(async({page}) =>
     {
       await page.getByText('Forms').click()
       await page.getByText('Form Layouts').click()
     })
 
-    test('input fields', async({page}) =>
-    {
+    test('input fields', async({page}) => {
       const usingTheGridEmailInput = page.locator('nb-card', {hasText: "Using the Grid"}).getByRole('textbox', {name: "Email"})
 
       await usingTheGridEmailInput.fill('test@test.com')
@@ -29,8 +26,7 @@ test.describe('Form Layouts page', () =>
       await expect(usingTheGridEmailInput).toHaveValue('test2@test.com')
     })
 
-    test('radio buttons', async({page}) =>
-    {
+    test('radio buttons', async({page}) => {
       const usingTheGridForm = page.locator('nb-card', {hasText: "Using the Grid"})
 
       await usingTheGridForm.getByLabel('Option 1').check({force: true})
@@ -45,14 +41,10 @@ test.describe('Form Layouts page', () =>
       await usingTheGridForm.getByRole('radio', {name: "Option 2"}).check({force: true})
       expect(await usingTheGridForm.getByRole('radio', {name: "Option 1"}).isChecked()).toBeFalsy()
       expect(await usingTheGridForm.getByRole('radio', {name: "Option 2"}).isChecked()).toBeTruthy()
-
-
-
     })
   })
 
-  test('checkboxes', async({page}) =>
-  {
+  test('checkboxes', async({page}) => {
       await page.getByText('Modal & Overlays').click()
       await page.getByText('Toastr').click()
 
@@ -72,8 +64,7 @@ test.describe('Form Layouts page', () =>
       }
   })
 
-  test('lists and dropdowns', async ({page}) =>
-  {
+  test('lists and dropdowns', async ({page}) => {
     const dropdownMenu = page.locator('ngx-header nb-select')
     await dropdownMenu.click()
 
@@ -89,8 +80,7 @@ test.describe('Form Layouts page', () =>
     const header = page.locator('nb-layout-header')
     await expect(header).toHaveCSS('background-color', 'rgb(50, 50, 89)')
 
-    const colors = 
-    {
+    const colors = {
       "Light":"rgb(255, 255, 255)",
       "Dark": "rgb(34, 43, 69)",
       "Cosmic": "rgb(50, 50, 89)",
@@ -98,8 +88,7 @@ test.describe('Form Layouts page', () =>
     }
 
     await dropdownMenu.click()
-    for(const color in colors)
-    {
+    for(const color in colors) {
       await optionList.filter({hasText:color}).click()
       await expect(header).toHaveCSS('background-color', colors[color])
       if(color != "Corporate")
@@ -107,8 +96,7 @@ test.describe('Form Layouts page', () =>
     }
   })
 
-  test('tooltips', async({page}) => 
-  {
+  test('tooltips', async({page}) => {
     await page.getByText('Modal & Overlays').click()
     await page.getByText('Tooltip').click()
 
@@ -120,13 +108,11 @@ test.describe('Form Layouts page', () =>
     expect(tooltip).toEqual('This is a tooltip')
   })
 
-  test('dialog box', async({page}) =>
-  {
+  test('dialog box', async({page}) => {
     await page.getByText('Tables & Data').click()
     await page.getByText('Smart Table').click()
 
-    page.on('dialog', dialog =>
-    {
+    page.on('dialog', dialog => {
       expect(dialog.message()).toEqual('Are you sure you want to delete?')
       dialog.accept()
     }
@@ -136,8 +122,7 @@ test.describe('Form Layouts page', () =>
     await expect(page.locator('table tr').first()).not.toHaveText('mdo@gmail.com')
   })
 
-  test('web tables', async({page}) =>
-  {
+  test('web tables', async({page}) => {
     await page.getByText('Tables & Data').click()
     await page.getByText('Smart Table').click()
 
@@ -159,15 +144,13 @@ test.describe('Form Layouts page', () =>
     // test filter of the table
     const ages = ["20", "30", "40", "200"]
 
-    for(let age of ages)
-    {
+    for(let age of ages) {
       await page.locator('input-filter').getByPlaceholder('Age').clear()
       await page.locator('input-filter').getByPlaceholder('Age').fill(age)
       await page.waitForTimeout(500)
       const ageRows = page.locator('tbody tr')
       
-      for(let row of await ageRows.all())
-      {
+      for(let row of await ageRows.all()) {
         const cellValue = await row.locator('td').last().textContent()
 
         if(age =='200') 
@@ -181,8 +164,7 @@ test.describe('Form Layouts page', () =>
     }
   })
 
-  test('date picker', async ({page}) =>
-  {
+  test('date picker', async ({page}) => {
     await page.getByText('Forms').click()
     await page.getByText('Datepicker').click()  
 
@@ -210,12 +192,10 @@ test.describe('Form Layouts page', () =>
     await expect(calendarInputField).toHaveValue(dateToAssert)
   })
 
-  test('sliders', async ({page}) => 
-  {
+  test('sliders', async ({page}) => {
     // 1 update slider attribute
     const tempGauge = page.locator('[tabtitle="Temperature"] ngx-temperature-dragger circle')
-    await tempGauge.evaluate( node => 
-    {
+    await tempGauge.evaluate( node => {
       node.setAttribute('cx', '232.630')
       node.setAttribute('cy', '232.630')
     })
