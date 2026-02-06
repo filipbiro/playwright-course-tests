@@ -2,6 +2,8 @@ import {test, expect} from '@playwright/test'
 
 test.beforeEach(async ({page}) =>
 {
+  if (!process.env.URL)
+    throw new Error("URL is missing.")
   await page.goto(process.env.URL)
   await page.getByText('Button Triggering AJAX Request').click()
 })

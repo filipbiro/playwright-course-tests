@@ -20,10 +20,12 @@ test('navigate to form page', async ({page}) =>
 
 test('parametrized methods', async ({page}) =>
 {
-
   const pm = new PageManager(page)
   const randomFullName = faker.person.fullName()
   const randomEmail = `${randomFullName.replace(' ', '')}${faker.number.int(1000)}@test.com`
+
+  if (!process.env.USERNAME || !process.env.PASSWORD) 
+    throw new Error('Missing USERNAME or PASSWORD')
 
   await pm.navigateTo().formLayoutsPage()
   await pm.onFormLayoutsPage().submitUsingTheGridFormWithCredentialsAndSelectOption(process.env.USERNAME, process.env.PASSWORD, 'Option 1')
