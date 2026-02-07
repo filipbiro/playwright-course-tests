@@ -1,4 +1,4 @@
-import {test} from '@playwright/test'
+import { test } from '@playwright/test'
 
 // Hook to run commands before each test
 test.beforeEach(async ({page}) => {

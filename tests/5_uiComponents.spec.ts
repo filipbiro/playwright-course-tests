@@ -1,12 +1,11 @@
-import {test, expect} from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test.beforeEach(async({page}) => {
   await page.goto('/')
 })
 
 test.describe('Form Layouts page', () => {
-    test.beforeEach(async({page}) =>
-    {
+    test.beforeEach(async({page}) => {
       await page.getByText('Forms').click()
       await page.getByText('Form Layouts').click()
     })
@@ -115,8 +114,7 @@ test.describe('Form Layouts page', () => {
     page.on('dialog', dialog => {
       expect(dialog.message()).toEqual('Are you sure you want to delete?')
       dialog.accept()
-    }
-    )
+    })
 
     await page.getByRole('table').locator('tr', {hasText: "mdo@gmail.com"}).locator('.nb-trash').click()
     await expect(page.locator('table tr').first()).not.toHaveText('mdo@gmail.com')
@@ -153,11 +151,9 @@ test.describe('Form Layouts page', () => {
       for(let row of await ageRows.all()) {
         const cellValue = await row.locator('td').last().textContent()
 
-        if(age =='200') 
-        {
+        if(age =='200') {
           expect(await page.getByRole('table').textContent()).toContain('No data found')
-        } else
-        {
+        } else {
           expect(cellValue).toEqual(age)
         }
       }
@@ -179,13 +175,12 @@ test.describe('Form Layouts page', () => {
     const expectedYear = date.getFullYear()
     const dateToAssert = `${expectedMonthShort} ${expectedDate}, ${expectedYear}`
 
-    let calendarMonthAndYear = await page.locator('nb-calendar-view-mode').textContent()
+    let calendarMonthAndYear = (await page.locator('nb-calendar-view-mode').textContent()) ?? ''
     const expectedMonthAndYear = ` ${expectedMonthLong} ${expectedYear}`
 
-    while(!calendarMonthAndYear.includes(expectedMonthAndYear))
-    {
+    while(!calendarMonthAndYear.includes(expectedMonthAndYear)) {
       await page.locator('nb-calendar-pageable-navigation [data-name="chevron-right"]').click()
-      calendarMonthAndYear = await page.locator('nb-calendar-view-mode').textContent()
+      calendarMonthAndYear = (await page.locator('nb-calendar-view-mode').textContent()) ?? ''
     }
 
     await page.locator('[class="day-cell ng-star-inserted"]').getByText(expectedDate, {exact: true}).click()
@@ -207,6 +202,11 @@ test.describe('Form Layouts page', () => {
     await tempBox.scrollIntoViewIfNeeded()
 
     const box = await tempBox.boundingBox()
+
+    if (!box) {
+      throw new Error('tempBox is not visible or not attached to the DOM')
+    }
+    
     const x = box.x + box.width / 2
     const y = box.y + box.height / 2 
     await page.mouse.move(x, y)

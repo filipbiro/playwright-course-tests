@@ -1,4 +1,4 @@
-import {test, expect} from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test.beforeEach(async ({page}) => {
   await page.goto('/')
@@ -51,8 +51,7 @@ test('user facing locators', async({page}) => {
   // await page.getByTestId('SignIn').click()
 })
 
-test('locating child elements', async ({page}) =>
-{
+test('locating child elements', async ({page}) => {
   // more compact syntax
   await page.locator('nb-card nb-radio :text-is("Option 1")').click()
   // chaining multiple locators

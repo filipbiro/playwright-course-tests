@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { PageManager } from '../page-objects/pageManager'
-import { faker} from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 
 test.beforeEach(async({page}) => {
   await page.goto('/')
@@ -21,8 +21,9 @@ test('parametrized methods', async ({page}) => {
   const randomFullName = faker.person.fullName()
   const randomEmail = `${randomFullName.replace(' ', '')}${faker.number.int(1000)}@test.com`
 
-  if (!process.env.USERNAME || !process.env.PASSWORD) 
+  if (!process.env.USERNAME || !process.env.PASSWORD) { 
     throw new Error('Missing USERNAME or PASSWORD')
+  }
 
   await pm.navigateTo().formLayoutsPage()
   await pm.onFormLayoutsPage().submitUsingTheGridFormWithCredentialsAndSelectOption(process.env.USERNAME, process.env.PASSWORD, 'Option 1')
