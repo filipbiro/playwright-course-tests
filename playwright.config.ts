@@ -15,7 +15,8 @@ export default defineConfig({
   reporter: [
     ['json', {outputFile: 'test-results/jsonReport.json'}],
     ['junit', {outputFile: 'test-results/junitReport.xml'}],
-    ['allure-playwright']
+    //[allure-playwright],
+    ['html']
   ],
   
   use: {    

@@ -29,17 +29,11 @@ test.describe('Form Layouts page', () => {
       const usingTheGridForm = page.locator('nb-card', {hasText: "Using the Grid"})
 
       await usingTheGridForm.getByLabel('Option 1').check({force: true})
-      await usingTheGridForm.getByRole('radio', {name: "Option 1"}).check({force: true})
-      const radioStatus = await usingTheGridForm.getByRole('radio', {name: "Option 1"}).isChecked()
-      
-      // validating status is checked
-      expect(radioStatus).toBeTruthy()
-      // option 2
-      await expect(usingTheGridForm.getByRole('radio', {name: "Option 1"})).toBeChecked()
-
       await usingTheGridForm.getByRole('radio', {name: "Option 2"}).check({force: true})
-      expect(await usingTheGridForm.getByRole('radio', {name: "Option 1"}).isChecked()).toBeFalsy()
-      expect(await usingTheGridForm.getByRole('radio', {name: "Option 2"}).isChecked()).toBeTruthy()
+      const radioStatus = await usingTheGridForm.getByRole('radio', {name: "Option 2"}).isChecked()
+      
+      await expect(usingTheGridForm).toHaveScreenshot()
+
     })
   })
 
