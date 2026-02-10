@@ -10,7 +10,7 @@ test.describe('Form Layouts page', () => {
       await page.getByText('Form Layouts').click()
     })
 
-    test('input fields', async({page}) => {
+    test('input fields @inputfields', async({page}) => {
       const usingTheGridEmailInput = page.locator('nb-card', {hasText: "Using the Grid"}).getByRole('textbox', {name: "Email"})
 
       await usingTheGridEmailInput.fill('test@test.com')
